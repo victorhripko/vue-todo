@@ -1,32 +1,46 @@
+<script>
+  import Todo from './components/Todo/Todo.vue';
+
+  export default {
+    components: { Todo }
+  }
+</script>
+
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="app">
+    <div class="app__main">
+      <Todo />
     </div>
-    <router-view/>
+    <aside class="app__aside">
+      <template v-if="this.$store.getters.countTodos">
+        Count: {{ this.$store.getters.countTodos }}
+        Done: {{ this.$store.getters.doneTodos }}
+      </template>
+    </aside>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  @import './assets/scss/global';
 
-#nav {
-  padding: 30px;
+  .app {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-areas: "main aside";
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    &__main {
+      grid-area: main;
+      overflow-y: auto;
+    }
 
-    &.router-link-exact-active {
-      color: #42b983;
+    &__aside {
+      grid-area: aside;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 2vw;
     }
   }
-}
 </style>
